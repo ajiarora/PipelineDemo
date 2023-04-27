@@ -1,9 +1,9 @@
 pipeline {
     agent any
-    environment{
-    DIRECTORY_PATH='Project Path'
-    TESTING_ENVIRONMENT='TEST ENV.'
-    PRODUCTION_ENVIRONMENT='PROD ENV.'
+    environment {
+    DIRECTORY_PATH="Project Path"
+    TESTING_ENVIRONMENT="TEST ENV."
+    PRODUCTION_ENVIRONMENT="PROD ENV."
     }
     stages {
         stage('Build Step 1') {
@@ -54,7 +54,7 @@ pipeline {
 		stage('Deploy to Production') {
             steps {
                 bat '''
-                    echo "Deploying application from $TESTING_ENVIRONMENT to $PRODUCTION_ENVIRONMENT"
+                    echo "Deploying application from testing environment $TESTING_ENVIRONMENT to production environment $PRODUCTION_ENVIRONMENT"
                 '''
             }
         }
