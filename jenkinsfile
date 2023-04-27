@@ -1,16 +1,16 @@
 pipeline {
     agent any
     environment {
-    DIRECTORY_PATH="Project Path"
-    TESTING_ENVIRONMENT="TEST ENV."
-    PRODUCTION_ENVIRONMENT="PROD ENV."
+    DIRECTORYPATH="Project Path"
+    TESTINGENVIRONMENT="TEST ENV."
+    PRODUCTIONENVIRONMENT="PROD ENV."
     }
     stages {
         stage('Build Step 1') {
             steps {
                 bat 'echo "Hello World"'
                 bat '''
-                    echo "fetch the source code from the directory path $DIRECTORY_PATH specified by the environment variable"
+                    echo "fetch the source code from the directory path $DIRECTORYPATH specified by the environment variable"
                 '''
             }
         }
@@ -54,7 +54,7 @@ pipeline {
 		stage('Deploy to Production') {
             steps {
                 bat '''
-                    echo "Deploying application from testing environment $TESTING_ENVIRONMENT to production environment $PRODUCTION_ENVIRONMENT"
+                    echo "Deploying application from testing environment $TESTINGENVIRONMENT to production environment $PRODUCTIONENVIRONMENT"
                 '''
             }
         }
