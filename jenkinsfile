@@ -1,9 +1,9 @@
 pipeline {
     agent any
     environment{
-    DIRECTORY_PATH="C:\Users\jenkins\AppData\Local\Jenkins\.jenkins\workspace\DemoPipeline"
-    TESTING_ENVIRONMENT="TEST ENV."
-    PRODUCTION_ENVIRONMENT="PROD ENV."
+    DIRECTORY_PATH='Project Path'
+    TESTING_ENVIRONMENT='TEST ENV.'
+    PRODUCTION_ENVIRONMENT='PROD ENV.'
     }
     stages {
         stage('Build Step 1') {
