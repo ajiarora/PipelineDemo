@@ -1,24 +1,24 @@
 pipeline {
-    agent agent
+    agent any
     stages {
         stage('Build Step 1') {
             steps {
-                sh 'echo "Hello World"'
-                sh '''
+                bat 'echo "Hello World"'
+                bat '''
                     echo "fetch the source code from the directory path $env.DIRECTORY_PATH specified by the environment variable"
                 '''
             }
         }
 		stage('Build Step 2') {
             steps {
-                sh '''
+                bat '''
                     echo "compile the code and generate any necessary artifacts"
                 '''
             }
         }
 		stage('Test') {
             steps {
-                sh '''
+                bat '''
                     echo "unit tests"
 					echo "integration tests"
                 '''
@@ -26,29 +26,29 @@ pipeline {
         }
 		stage('Code Quality Check') {
             steps {
-                sh '''
+                bat '''
                     echo "check the quality of the code"
                 '''
             }
         }
 		stage('Deploy') {
             steps {
-                sh '''
+                bat '''
                     echo "deploy the application to a testing environment specified by the environment variable"
                 '''
             }
         }
 		stage('Approval') {
             steps {
-                sh '''
+                bat '''
                     echo "Waiting for approval by manager"
-					sleep 10
+					ping 127.0.0.1 -n 1 -w 10 >nul
                 '''
             }
         }
 		stage('Deploy to Production') {
             steps {
-                sh '''
+                bat '''
                     echo "Deploying application from test environment $env.TESTING_ENVIRONMENT to production environment $env.PRODUCTION_ENVIRONMENT"
                 '''
             }
