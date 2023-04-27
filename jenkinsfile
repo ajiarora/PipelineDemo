@@ -42,7 +42,7 @@ pipeline {
                     echo "deploy the application to a testing environment specified by the environment variable"
                 '''
             }
-        }
+        } 
 		stage('Approval') {
             steps {
                 bat '''
