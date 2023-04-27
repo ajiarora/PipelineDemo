@@ -10,7 +10,7 @@ pipeline {
             steps {
                 bat 'echo "Hello World"'
                 bat '''
-                    echo "fetch the source code from the directory path $DIRECTORY_PATH specified by the environment variable"
+                    echo "fetch the source code from the directory path %DIRECTORY_PATH% specified by the environment variable"
                 '''
             }
         }
@@ -47,14 +47,14 @@ pipeline {
             steps {
                 bat '''
                     echo "Waiting for approval by manager"
-					ping 127.0.0.1 -n 1 -w 10 >nul
+		    ping 127.0.0.1 -n 1 -w 10 >nul
                 '''
             }
         }
 		stage('Deploy to Production') {
             steps {
                 bat '''
-                    echo "Deploying application from testing environment $TESTING_ENVIRONMENT to production environment $PRODUCTION_ENVIRONMENT"
+                    echo "Deploying application from testing environment %TESTING_ENVIRONMENT% to production environment %PRODUCTION_ENVIRONMENT%"
                 '''
             }
         }
