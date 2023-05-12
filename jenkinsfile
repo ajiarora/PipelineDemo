@@ -1,62 +1,56 @@
 pipeline {
     agent any
-    environment {
-    DIRECTORY_PATH="Project Path"
-    TESTING_ENVIRONMENT="TEST ENV."
-    PRODUCTION_ENVIRONMENT="PROD ENV."
-    }
+    
     stages {
-        stage('Build Step 1') {
+        stage('Build') {
             steps {
-                bat 'echo "Hello World"'
-                bat '''
-                    echo "fetch the source code from the directory path %DIRECTORY_PATH% specified by the environment variable"
-                '''
+                sh 'mvn clean package'
             }
         }
-		stage('Build Step 2') {
+        
+        stage('Unit and Integration Tests') {
             steps {
-                bat '''
-                    echo "compile the code and generate any necessary artifacts"
-                '''
+                sh './run_tests.sh'
             }
         }
-		stage('Test') {
+        
+        stage('Code Analysis') {
             steps {
-                bat '''
-                    echo "unit tests"
-					echo "integration tests"
-                '''
+                sh 'mvn checkstyle:checkstyle'
             }
         }
-		stage('Code Quality Check') {
+        
+        stage('Security Scan') {
             steps {
-                bat '''
-                    echo "check the quality of the code"
-                '''
+                sh 'npm audit'
             }
         }
-		stage('Deploy') {
+        
+        stage('Deploy to Staging') {
             steps {
-                bat '''
-                    echo "deploy the application to a testing environment specified by the environment variable"
-                '''
-            }
-        } 
-		stage('Approval') {
-            steps {
-                bat '''
-                    echo "Waiting for approval by manager"
-		    ping 127.0.0.1 -n 1 -w 10 >nul
-                '''
+                sh './deploy_to_staging.sh'
             }
         }
-		stage('Deploy to Production') { 
+        
+        stage('Integration Tests on Staging') {
             steps {
-                bat '''
-                    echo "Deploying application from testing environment %TESTING_ENVIRONMENT% to production environment %PRODUCTION_ENVIRONMENT%"
-                '''
+                sh './run_integration_tests.sh'
             }
+        }
+        
+        stage('Deploy to Production') {
+            steps {
+                sh './deploy_to_production.sh'
+            }
+        }
+    }
+    
+    post {
+        always {
+            emailext body: 'Pipeline completed successfully.', 
+                     recipientProviders: [[$class: 'DevelopersRecipientProvider']], 
+                     subject: 'Pipeline Notification', 
+                     to: 'ajitesharora3088@gmail.com'
         }
     }
 }
